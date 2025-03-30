@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>Show Orders</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center my-4">Orders</h1>
+
+    {% if obj %}
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in obj %}
+                <tr>
+                    <td>{{ i.oid }}</td>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.price }}</td>
+                    <td>{{ i.mail }}</td>
+                    <td>{{ i.addr }}</td>
+                    <td>
+                        <a href="{% url 'update_url' i.oid %}" class="btn btn-warning btn-sm">Update</a>
+                        <a href="{% url 'delete_url' i.oid %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">No orders available.</p>
+    {% endif %}
+{% endblock %}
