@@ -1,22 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Головна — Персональний блог{% endblock %}
+{% block title %}Публікації — Персональний блог{% endblock %}
 
 {% block content %}
+<h1 class="mb-4">Публікації{% if category %} / {{ category }}{% endif %}</h1>
 
-<section class="py-5 text-center bg-light rounded-3 mb-5">
-  <div class="container">
-    <h1 class="display-5 fw-bold">Блог: Роман Баглай, 544 група</h1>
-    <a href="{% url 'articles-list' %}" class="btn btn-primary btn-lg">Переглянути всі публікації</a>
-  </div>
-</section>
-
-<!-- Останні 3 статті -->
-<h2 class="mb-4">Останні публікації</h2>
 <div class="row g-4">
-  {% for item in articles|slice:":3" %}
-    <div class="col-md-4">
+  {% for item in items %}
+    <div class="col-sm-6 col-lg-4">
       <div class="card h-100">
         {% if item.images.all %}
           <img src="{{ item.images.all.0.image.url }}" class="card-img-top" alt="{{ item.title }}">

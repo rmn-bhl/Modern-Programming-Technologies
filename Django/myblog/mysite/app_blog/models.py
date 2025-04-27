@@ -3,23 +3,24 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
-
 class Category(models.Model):
     category = models.CharField('Категорія', max_length=250, help_text='Максимум 250 символів')
-    slug = models.SlugField('Слаг', unique=True, blank=True)
+    slug = models.SlugField('Слаг')
+    objects = models.Manager()
 
     class Meta:
-        verbose_name = 'Категорія для новини'
-        verbose_name_plural = 'Категорії для новин'
+        verbose_name = 'Категорія для публікації'
+        verbose_name_plural = 'Категорії для публікацій'
 
     def __str__(self):
         return self.category
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.category)
-        super().save(*args, **kwargs)
-
+    def get_absolute_url(self):
+        try:
+            url = reverse('articles-category-list', kwargs={'slug': self.slug})
+        except:
+            url = "/"
+        return url
 
 class Article(models.Model):
     title = models.CharField('Заголовок', max_length=250, help_text='Максимум 250 символів')
